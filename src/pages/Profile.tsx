@@ -4,11 +4,17 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import { User, MapPin, Mail, Calendar, Award, Volume2, Video, FileText, Edit } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Profile = () => {
+  const { t } = useLanguage();
+  
+  // Placeholder user data - this should come from authentication
+  const isLoggedIn = false; // This would come from your auth state
+  
   const userData = {
     name: "Raghava Sharma",
-    region: "Andhra Pradesh",
+    region: "Andhra Pradesh", 
     email: "raghava.sharma@gmail.com",
     joinDate: "March 15, 2024",
     totalContributions: 47,
@@ -19,12 +25,39 @@ const Profile = () => {
   };
 
   const badges = [
-    { name: "Temple Guardian", icon: "🏛️", earned: true },
-    { name: "Story Preserver", icon: "📜", earned: true },
-    { name: "Voice of Heritage", icon: "🎙️", earned: true },
+    { name: t('profile.templeGuardian'), icon: "🏛️", earned: true },
+    { name: t('profile.storyPreserver'), icon: "📜", earned: true },
+    { name: t('profile.voiceKeeper'), icon: "🎙️", earned: true },
     { name: "Video Chronicle", icon: "🎬", earned: false },
     { name: "Master Contributor", icon: "👑", earned: false },
   ];
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <div className="pt-24 pb-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-md mx-auto text-center">
+              <div className="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 shadow-glow">
+                <img 
+                  src="/lovable-uploads/a911a0b6-feea-4daa-a875-efaf909622f7.png" 
+                  alt="Devalayala Dhaara Logo" 
+                  className="w-32 h-32 object-contain"
+                />
+              </div>
+              <h1 className="text-3xl font-bold mb-4">{t('profile.title')}</h1>
+              <p className="text-muted-foreground mb-8">{t('profile.pleaseLogin')}</p>
+              <Button variant="divine" size="lg" onClick={() => window.location.href = '/login'}>
+                {t('header.login')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -77,7 +110,7 @@ const Profile = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Award className="text-primary" size={24} />
-                    <span>Contribution Statistics</span>
+                    <span>{t('profile.myContributions')}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -85,14 +118,14 @@ const Profile = () => {
                     <div className="text-4xl font-bold text-primary mb-2">
                       {userData.totalContributions}
                     </div>
-                    <p className="text-muted-foreground">Total Contributions</p>
+                    <p className="text-muted-foreground">{t('profile.totalContributions')}</p>
                   </div>
                   
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <Volume2 className="text-accent" size={20} />
-                        <span>Audio</span>
+                        <span>{t('profile.audioFiles')}</span>
                       </div>
                       <span className="font-semibold">{userData.audioContributions}</span>
                     </div>
@@ -101,7 +134,7 @@ const Profile = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <Video className="text-primary" size={20} />
-                        <span>Video</span>
+                        <span>{t('profile.videoFiles')}</span>
                       </div>
                       <span className="font-semibold">{userData.videoContributions}</span>
                     </div>
@@ -110,7 +143,7 @@ const Profile = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <FileText className="text-foreground" size={20} />
-                        <span>Text</span>
+                        <span>{t('profile.textStories')}</span>
                       </div>
                       <span className="font-semibold">{userData.textContributions}</span>
                     </div>
@@ -124,7 +157,7 @@ const Profile = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Award className="text-accent" size={24} />
-                    <span>Badges & Achievements</span>
+                    <span>{t('profile.badges')}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -152,11 +185,23 @@ const Profile = () => {
               </Card>
             </div>
 
+            {/* Recent Activity */}
+            <Card className="mt-8 bg-card/50 border-primary/20 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>{t('profile.recentActivity')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-center py-8">
+                  Recent activity will appear here once you start contributing.
+                </p>
+              </CardContent>
+            </Card>
+
             {/* Current Streak */}
             <Card className="mt-8 bg-gradient-hero text-white shadow-divine">
               <CardContent className="p-8 text-center">
                 <div className="text-6xl mb-4">🔥</div>
-                <h2 className="text-3xl font-bold mb-2">{userData.streak} Day Streak</h2>
+                <h2 className="text-3xl font-bold mb-2">{userData.streak} {t('home.dayStreak')}</h2>
                 <p className="text-white/80 mb-6">
                   You're on fire! Keep contributing to maintain your streak.
                 </p>

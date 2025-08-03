@@ -5,10 +5,12 @@ import { Label } from "@/components/ui/label";
 import Header from "@/components/Header";
 import { Mail, Lock, User, Phone, MapPin, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-background">
@@ -18,21 +20,25 @@ const Login = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto">
             <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-gradient-hero rounded-full flex items-center justify-center mx-auto mb-4 shadow-glow">
-                <span className="text-white text-3xl">🕉</span>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-glow">
+                <img 
+                  src="/lovable-uploads/a911a0b6-feea-4daa-a875-efaf909622f7.png" 
+                  alt="Devalayala Dhaara Logo" 
+                  className="w-20 h-20 object-contain"
+                />
               </div>
               <h1 className="text-3xl font-bold mb-2">
-                {isLogin ? "Welcome Back" : "Join Our Mission"}
+                {isLogin ? t('login.title') : t('login.createAccount')}
               </h1>
               <p className="text-muted-foreground">
-                {isLogin ? "Continue preserving temple heritage" : "Become a Temple Guardian today"}
+                {t('login.subtitle')}
               </p>
             </div>
 
             <Card className="bg-card/50 border-primary/20 backdrop-blur-sm shadow-divine">
               <CardHeader>
                 <CardTitle className="text-center">
-                  {isLogin ? "Sign In" : "Create Account"}
+                  {isLogin ? t('login.signin') : t('login.createAccount')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -40,18 +46,18 @@ const Login = () => {
                   <div className="space-y-2">
                     <Label htmlFor="fullName" className="flex items-center space-x-2">
                       <User size={16} />
-                      <span>Full Name</span>
+                      <span>{t('login.fullName')}</span>
                     </Label>
-                    <Input id="fullName" placeholder="Enter your full name" />
+                    <Input id="fullName" placeholder={t('login.fullName')} />
                   </div>
                 )}
 
                 <div className="space-y-2">
                   <Label htmlFor="email" className="flex items-center space-x-2">
                     <Mail size={16} />
-                    <span>Email</span>
+                    <span>{t('login.email')}</span>
                   </Label>
-                  <Input id="email" type="email" placeholder="Enter your email" />
+                  <Input id="email" type="email" placeholder={t('login.email')} />
                 </div>
 
                 {!isLogin && (
@@ -59,17 +65,17 @@ const Login = () => {
                     <div className="space-y-2">
                       <Label htmlFor="region" className="flex items-center space-x-2">
                         <MapPin size={16} />
-                        <span>Region</span>
+                        <span>{t('login.region')}</span>
                       </Label>
-                      <Input id="region" placeholder="Your region/state" />
+                      <Input id="region" placeholder={t('login.region')} />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="mobile" className="flex items-center space-x-2">
                         <Phone size={16} />
-                        <span>Mobile Number</span>
+                        <span>{t('login.mobile')}</span>
                       </Label>
-                      <Input id="mobile" placeholder="Your mobile number" />
+                      <Input id="mobile" placeholder={t('login.mobile')} />
                     </div>
                   </>
                 )}
@@ -77,13 +83,13 @@ const Login = () => {
                 <div className="space-y-2">
                   <Label htmlFor="password" className="flex items-center space-x-2">
                     <Lock size={16} />
-                    <span>Password</span>
+                    <span>{t('login.password')}</span>
                   </Label>
                   <div className="relative">
                     <Input 
                       id="password" 
                       type={showPassword ? "text" : "password"} 
-                      placeholder="Enter your password" 
+                      placeholder={t('login.password')} 
                     />
                     <Button
                       type="button"
@@ -98,7 +104,7 @@ const Login = () => {
                 </div>
 
                 <Button variant="divine" className="w-full">
-                  {isLogin ? "Sign In" : "Create Account"}
+                  {isLogin ? t('login.signin') : t('login.createAccountBtn')}
                 </Button>
 
                 <div className="relative">
@@ -131,27 +137,27 @@ const Login = () => {
                       fill="#EA4335"
                     />
                   </svg>
-                  Continue with Google
+                  {t('login.continueGoogle')}
                 </Button>
 
                 {isLogin && (
                   <div className="text-center">
                     <Button variant="link" className="text-sm text-primary">
-                      Forgot Password?
+                      {t('login.forgotPassword')}
                     </Button>
                   </div>
                 )}
 
                 <div className="text-center text-sm">
                   <span className="text-muted-foreground">
-                    {isLogin ? "Don't have an account? " : "Already have an account? "}
+                    {isLogin ? t('login.noAccount') : t('login.haveAccount')}
                   </span>
                   <Button 
                     variant="link" 
                     className="p-0 h-auto text-primary"
                     onClick={() => setIsLogin(!isLogin)}
                   >
-                    {isLogin ? "Sign up" : "Sign in"}
+                    {isLogin ? t('login.signupHere') : t('login.loginHere')}
                   </Button>
                 </div>
               </CardContent>
